@@ -39,13 +39,13 @@ There are two basic ways of outputting a calendar: via the presenter itself or b
 
   <%= calendar_for(2009, 1) %> and
   <%= LaterDude::Calendar.new(2009, 1).to_html %>
-  
+
 both yield the same results. This is similar to what Rails does with RedCloth/BlueCloth filters.
 
 In addition to year and month which are required parameters you can optionally supply an options hash:
 
   <%= calendar_for(2009, 1, :calendar_class => "my_calendar", :first_day_of_week => 1)
-  
+
 Possible options are:
 
   * :calendar_class: The CSS class for the surrounding table. Defaults to "calendar".
@@ -97,28 +97,28 @@ You can customize the calendar's header section (i.e. the first table row) by us
   * :previous_month
   * :next_and_previous_month
   * :current_month
-  
+
 All of these can either take a single value or an array of two values:
 
   # simple string
   :next_month => "&raquo;"
-  
+
   # strftime string
   :next_month => "%b"
-  
+
   # proc - will evaluate the proc
   :next_month => lambda { |date| link_to "&raquo;", calendar_path(date.year, month.year) }
-  
+
   # simple string and proc - will evaluate the proc and use it for link_to, e.g. link_to("&raquo;", calendar_path(date.year, month.year))
   :next_month => ["&raquo;", lambda { |date| calendar_path(date.year, month.year) }]
 
   # strftime string and proc - will evaluate the proc and use it for link_to, e.g. link_to("Jan", calendar_path(date.year, month.year))
   :next_month => ["%b", lambda { |date| calendar_path(date.year, month.year) }]
-  
+
 If you use a proc it gets passed a Date object carrying the respective month, i.e. the proc for :previous_month gets passed a Date object representing the previous month etc.
 
 You can do all kinds of mighty stuff with a proc. Imagine a situation where you want to show the abbreviated month name and then the number of events for the given month:
-  
+
   # depending on your routes, this outputs something like <a href="/calendar/2009/1">Jan (3 events)</a>
   :next_month => lambda { |date| link_to I18n.localize(date, :format => "%b (#{pluralize(Event.in_month(date))})", calendar_path(date.year, date.month) }
 
@@ -138,7 +138,7 @@ Of course, you can also put other configuration options in the locale and then p
   date:
     calendar:
       calendar_class: my_cool_calendar
-      
+
   # in the view
   <%= calendar_for(2009, 1, :calendar_class => I18n.translate(:'date.calendar.calendar_class', :default => "my_calendar"))
 
